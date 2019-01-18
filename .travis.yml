@@ -1,0 +1,23 @@
+sudo: required
+services: 
+  - docker
+
+before_install:
+  - docker build -t tjkjohn/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run tjkjohn/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t tjkjohn/multi-client ./clients
+  - docker build -t tjkjohn/multi-nginx  ./nginx
+  - docker build -t tjkjohn/multi-server ./server
+  - docker build -t tjkjohn/multi-worker ./worker
+
+  #login Docker 
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push tjkjohn/multi-client
+  - docker push tjkjohn/multi-nginx
+  - docker push tjkjohn/multi-server
+  - docker push tjkjohn/multi-worker
