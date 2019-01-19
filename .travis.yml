@@ -9,7 +9,7 @@ script:
   - docker run tjkjohn/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t tjkjohn/multi-client ./clients
+  - docker build -t tjkjohn/multi-client ./client
   - docker build -t tjkjohn/multi-nginx  ./nginx
   - docker build -t tjkjohn/multi-server ./server
   - docker build -t tjkjohn/multi-worker ./worker
