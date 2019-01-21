@@ -25,6 +25,7 @@
         {
             "name": "nginx",
             "image": "tjkjohn/multi-nginx",
+            "hostname": "nginx",
             "essential": true,
             "portMappings": [
                 {
